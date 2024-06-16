@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JavaScript для Начинающих</title>
+	<style>
+		body {
+			font-family: Courier New;
+			margin: 0;
+			padding: 0;
+			background-color: #FFD700;
+		}
+
+		header,
+		footer {
+			background-color: black;
+			color: #fff;
+			text-align: center;
+			padding: 1em 0;
+		}
+		.container {
+			padding: 20px;
+		}
+
+		.menu {
+			display: flex;
+			justify-content: space-around;
+			margin-bottom: 20px;
+		}
+
+		.menu button {
+			padding: 10px 20px;
+			background-color: #007BFF;
+			color: white;
+			border: 3px solid #2E9AFF;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		.menu button:hover {
+			background-color: #0056b3;
+		}
+
+		.content {
+			margin-bottom: 20px;
+		}
+
+		.quiz {
+			margin-bottom: 50px;
+		}
+
+		.overlay {
+			display:inline-flex;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.8);
+			color: white;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		} 
+		.overlay img {
+			max-width: 90%;
+			max-height: 90%;
+		}
+	</style>
+</head>
+
+<body>
+
+	<header>
+		<h1>Добро пожаловать в JavaScript для Начинающих!</h1>
+	</header>
+	 <section id="introduction">
+        <ul> <h2>Что такое JavaScript?</h2>
+         
+         	<li>JavaScript — это язык программирования, который используется для создания интерактивных элементов на веб-страницах. Он помогает сделать сайты динамическими и пользовательскими. </li>
+         	</ul>
+    </section>
+    <section id="usage">
+        <ul> <h2>Для чего нужен JavaScript?</h2>
+        
+            <li>Создание интерактивных элементов на сайте (например, кнопок, форм, галерей).</li>
+            <li>Разработка веб-приложений (например, игр, чат-ботов, калькуляторов).</li>
+            <li>Работа с браузером (например, управление HTML-элементами, обработка событий).</li>
+        </ul>
+    </section>
+    <section id="not-usage">
+        <ul>
+        <h2>Когда JavaScript не пригодится?</h2>
+        <li>JavaScript не подходит для выполнения задач на сервере (для этого есть Node.js), работы с базами данных (это делается с помощью SQL) и создания сложных программ для настольных компьютеров (для этого лучше использовать языки, такие как C++ или Java).</li>
+        </ul>
+    </section>
+	<div class="container">
+		<div class="menu">
+			<button onclick="askZodiacSign()">Приветствие по Знаку Зодиака</button>
+			<button onclick="virusPage()">Вирусная Страница</button>
+			<button onclick="askNumber()">Угадай Число</button>
+			<button onclick="showDate()">Показать Дату</button>
+			<button onclick="multiplyRandomNumbers()">Умножение Случайных Чисел</button>
+		</div>
+
+		<div id="content" class="content"></div>
+
+		<div id="quiz" class="quiz">
+			<h2>Тест по JavaScript</h2>
+			<form id="quizForm">
+			</form>
+			<button onclick="submitQuiz()">Отправить Тест</button>
+			<div id="quizResult"></div>
+		</div>
+	</div>
+
+	<div id="overlay" class="overlay" onclick="hideOverlay()" >
+		<img src="https://4.bp.blogspot.com/-8Bb1LdqLqyA/U6uLLJL2KVI/AAAAAAAAAMM/A-wZLfv-sLY/s1600/html5-webprojectbd.jpg" alt="IT Image">
+		<p id="overlayText"></p>
+	</div>
+	<footer>
+		<p>&copy; 2024 JavaScript для Начинающих</p>
+	</footer>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', (event) => {
+			let userName = localStorage.getItem('userName');
+			if (!userName) {
+				userName = prompt('Пожалуйста, введите ваше имя:');
+				if (userName) {
+					localStorage.setItem('userName', userName);
+				}
+			}
+			document.getElementById('overlayText').textContent = `Добро пожаловать, ${userName}! Сегодня ${new Date().toLocaleDateString()}`;
+		});
+
+		function askZodiacSign() {
+			const sign = prompt('Пожалуйста, введите ваш Знак Зодиака:');
+			if (sign) {
+				alert(`Привет, ${sign}!`);
+			}
+		}
+
+		function virusPage() {
+			while (true) {
+				alert('Это вирусная страница!');
+			}
+		}
+
+		function askNumber() {
+			let num;
+			while (true) {
+				num = prompt('Пожалуйста, введите число больше 5:');
+				if (num === null) break;
+				if (!isNaN(num) && Number(num) > 5) {
+					alert('Поздравляем! Правильное число.');
+					break;
+				} else {
+					alert('Неправильное число. Попробуйте снова.');
+				}
+			}
+		}
+
+		function showDate() {
+			const date = new Date();
+			document.getElementById('content').textContent = `Сегодняшняя дата: ${date.toLocaleDateString()}`;
+		}
+
+		function multiplyRandomNumbers() {
+			const num1 = Math.floor(Math.random() * 51);
+			const num2 = Math.floor(Math.random() * 51);
+			const result = num1 * num2;
+			alert(`Произведение ${num1} и ${num2} равно ${result}`);
+		}
+
+		function submitQuiz() {
+			const quizForm = document.getElementById('quizForm');
+			const formData = new FormData(quizForm);
+			const answers = Array.from(formData.values());
+			const correctAnswers = [
+				'document.getElementById("demo").innerHTML = "Hello World!";',
+				'var',
+				'for',
+				'document.createElement',
+				'30',
+				'object',
+				'4',
+				'true',
+				'===',
+				'function'
+			];
+			let score = 0;
+			let resultHTML = '<ul>';
+			for (let i = 0; i < answers.length; i++) {
+				if (answers[i] === correctAnswers[i]) {
+					score++;
+					resultHTML += `<li>Вопрос ${i + 1}: Верно</li>`;
+				} else {
+					resultHTML += `<li>Вопрос ${i + 1}: Неверно</li>`;
+				}
+			}
+			resultHTML += `</ul><p>Ваш результат: ${score} из ${correctAnswers.length}</p>`;
+			document.getElementById('quizResult').innerHTML = resultHTML;
+		}
+
+		function showOverlay() {
+			document.getElementById('overlay').style.display = 'flex';
+		}
+
+		function hideOverlay() {
+			document.getElementById('overlay').style.display = 'none';
+		}
+
+		const quizQuestions = [
+			{
+				question: 'Какой правильный синтаксис для изменения содержания HTML элемента?',
+				options: [
+					'document.getElementById("demo").innerHTML = "Hello World!";',
+					'document.getElement("demo").innerHTML = "Hello World!";',
+					'document.getElementByName("demo").innerHTML = "Hello World!";',
+					'document.getElementByTagName("demo").innerHTML = "Hello World!";'
+				],
+				correctAnswer: 'document.getElementById("demo").innerHTML = "Hello World!";'
+			},
+			{
+				question: 'Какое ключевое слово используется для объявления переменной в JavaScript?',
+				options: ['var', 'let', 'const', 'variable'],
+				correctAnswer: 'var'
+			},
+			{
+				question: 'Какой цикл используется для перебора массива?',
+				options: ['for', 'while', 'do-while', 'forEach'],
+				correctAnswer: 'for'
+			},
+			{
+				question: 'Какой метод используется для создания нового элемента в DOM?',
+				options: ['document.createElement', 'document.appendChild', 'document.newElement', 'document.addElement'],
+				correctAnswer: 'document.createElement'
+			},
+			{
+				question: 'Чему равно значение выражения: 10 + 20 / 2 * 3?',
+				options: ['30', '35', '40', '45'],
+				correctAnswer: '30'
+			},
+			{
+				question: 'Какой тип данных является объектом?',
+				options: ['number', 'string', 'boolean', 'object'],
+				correctAnswer: 'object'
+			},
+			{
+				question: 'Чему равно значение выражения: Math.sqrt(16)?',
+				options: ['2', '4', '8', '16'],
+				correctAnswer: '4'
+			},
+			{
+				question: 'Какое значение имеет булевое выражение: 5 > 3 && 2 < 4?',
+				options: ['true', 'false', 'None of the above'],
+				correctAnswer: 'true'
+			},
+			{
+				question: 'Какое оператор сравнения проверяет на строгое равенство?',
+				options: ['==', '===', '!=', '!=='],
+				correctAnswer: '==='
+			},
+			{
+				question: 'Какое ключевое слово используется для объявления функции?',
+				options: ['function', 'func', 'def', 'declare'],
+				correctAnswer: 'function'
+			}
+		];
+
+		const quizForm = document.getElementById('quizForm');
+		quizQuestions.forEach((question, index) => {
+			const fieldset = document.createElement('fieldset');
+			const legend = document.createElement('legend');
+			legend.textContent = question.question;
+			fieldset.appendChild(legend);
+			question.options.forEach((option, i) => {
+				const label = document.createElement('label');
+				const input = document.createElement('input');
+				input.type = 'radio';
+				input.name = `question${index}`;
+				input.value = option;
+				label.appendChild(input);
+				label.appendChild(document.createTextNode(option));
+				fieldset.appendChild(label);
+				fieldset.appendChild(document.createElement('br'));
+			});
+			quizForm.appendChild(fieldset);
+		});
+
+		showOverlay();
+	</script>
+</body>
+
+</html><script type="text/javascript"></script></body><html>
